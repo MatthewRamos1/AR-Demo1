@@ -24,6 +24,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints]
+        sceneView.autoenablesDefaultLighting = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +35,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         // Run the view's session
         sceneView.session.run(configuration)
+        drawSphereAtOrigin()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -41,6 +43,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+    
+    func drawSphereAtOrigin() {
+        let sphere = SCNNode(geometry: SCNSphere(radius: 0.05))
+        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        sphere.position = SCNVector3(0, 0, 0)
+        sceneView.scene.rootNode.addChildNode(sphere)
+        
     }
 
     // MARK: - ARSCNViewDelegate
